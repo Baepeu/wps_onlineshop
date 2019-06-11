@@ -19,5 +19,6 @@ def add_product(request, product_id):
             cd = form.cleaned_data
             cart.add(product=product[0], quantity=cd['quantity'], is_update=cd['is_update'])
 
+    print(cart.cart.values())
     url = request.META['HTTP_REFERER']
     return redirect(url)
