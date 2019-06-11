@@ -9,12 +9,6 @@ class ProductList(ListView):
     model = Product
     template_name = 'shop/product_list.html'
 
-    def get_context_data(self, *, object_list=None, **kwargs):
-        # pk = 1 : Home
-        categories = Category.objects.filter(parent_category=Category.objects.get(pk=1)).order_by('name')
-        kwargs.update({'categories':categories})
-        return super().get_context_data(**kwargs)
-
     def get_queryset(self):
         # 상위 카테고리를 고르면 하위 카테고리 제품들이 한꺼번에 출력되도록 변경
         queryset = super().get_queryset()

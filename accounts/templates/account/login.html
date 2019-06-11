@@ -35,9 +35,10 @@
 {% load widget_tweaks %}
 <form class="login" method="POST" action="{% url 'account_login' %}">
     {% csrf_token %}
+
     <div class="form-group">
         <label>{{form.login.label}}</label>
-        {% render_field form.login class="form-control" placeholder='Email Or Username' %}
+        {% render_field form.login class="form-control" placeholder='Email or Username' %}
         {% for error in form.login.errors %}
           <span class="help-block">{{ error }}</span>
         {% endfor %}
@@ -45,7 +46,7 @@
     </div>
     <div class="form-group">
         <label>{{form.password.label}}</label>
-        {% render_field form.password class="form-control" placeholder='User password' %}
+        {% render_field form.password class="form-control" placeholder='Your password' %}
         {% for error in form.password.errors %}
           <span class="help-block">{{ error }}</span>
         {% endfor %}
