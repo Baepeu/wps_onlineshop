@@ -2,7 +2,7 @@ from django.shortcuts import render
 
 # Create your views here.
 from django.views.generic.list import ListView
-
+from django.views.generic.detail import DetailView
 from .models import *
 
 class ProductList(ListView):
@@ -32,3 +32,7 @@ class ProductList(ListView):
         for category in categories:
             categories |= self.get_category_list(category)
         return categories
+
+class ProductDetail(DetailView):
+    model = Product
+    template_name = 'shop/product_detail.html'

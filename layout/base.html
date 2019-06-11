@@ -15,11 +15,11 @@
         <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
             {% if user.is_authenticated %}
                 <li class="nav-item">
-                    <a class="btn btn-sm btn-outline-secondary" href="#">Signout</a>
+                    <a class="btn btn-sm btn-outline-secondary" href="{% url 'account_logout' %}">Signout</a>
                 </li>
                 {% else %}
-                <li class="btn btn-sm btn-outline-secondary">
-                    <a class="nav-link" href="#">Signin/Signup</a>
+                <li class="nav-item">
+                    <a class="btn btn-sm btn-outline-secondary" href="{% url 'account_login' %}">Signin/Signup</a>
                 </li>
                 {% endif %}
         </ul>

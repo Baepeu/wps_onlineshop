@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+{% block title %}
+{% endblock %}
+
+{% block content %}
+
+
+<div class="row no-gutters bg-light position-relative">
+    <div class="col-md-6 mb-md-0 p-md-4">
+        <img src="{{object.image.url}}" class="w-100" alt="{{object.name}}">
+    </div>
+    <div class="col-md-6 position-static p-4 pl-md-0">
+        <h5 class="mt-0">{{object.name}}</h5>
+        <p>
+        <table class="table table-striped">
+            <tr>
+                <td>Price</td>
+                <td>{{object.price}}</td>
+            </tr>
+            <tr>
+                <td>Stock</td>
+                <td>{{object.stock}}</td>
+            </tr>
+            <tr>
+                <td>Order Available</td>
+                <td>{{object.available_order}}</td>
+            </tr>
+        </table>
+        </p>
+        <a href="#" class="stretched-link">Add to Cart</a>
+    </div>
+</div>
+
+<div class="jumbotron jumbotron-fluid bg-white">
+    <div class="container">
+
+        {{object.description|safe}}
+    </div>
+</div>
+
+{% endblock %}

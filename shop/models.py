@@ -34,3 +34,6 @@ class Product(models.Model):
 
     def __str__(self):
         return "["+self.category.name+"] " + self.name
+
+    def get_absolute_url(self):
+        return resolve_url('product_detail', self.slug)
