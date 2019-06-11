@@ -3,7 +3,9 @@ from django.shortcuts import render
 # Create your views here.
 from django.views.generic.list import ListView
 from django.views.generic.detail import DetailView
+
 from .models import *
+from cart.forms import AddToCartForm
 
 class ProductList(ListView):
     model = Product
@@ -30,3 +32,20 @@ class ProductList(ListView):
 class ProductDetail(DetailView):
     model = Product
     template_name = 'shop/product_detail.html'
+
+    def get_context_data(self, **kwargs):
+        form = AddToCartForm()
+        kwargs.update({'form':form})
+        return super().get_context_data(**kwargs)
+
+
+
+
+
+
+
+
+
+
+
+

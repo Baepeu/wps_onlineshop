@@ -13,22 +13,35 @@
     <div class="col-md-6 position-static p-4 pl-md-0">
         <h5 class="mt-0">{{object.name}}</h5>
         <p>
-        <table class="table table-striped">
-            <tr>
-                <td>Price</td>
-                <td>{{object.price}}</td>
-            </tr>
-            <tr>
-                <td>Stock</td>
-                <td>{{object.stock}}</td>
-            </tr>
-            <tr>
-                <td>Order Available</td>
-                <td>{{object.available_order}}</td>
-            </tr>
-        </table>
+            <form action="{% url 'add_product' object.id %}" method="post">
+                <table class="table table-striped">
+                    <tr>
+                        <td>Price</td>
+                        <td>{{object.price}}</td>
+                    </tr>
+                    <tr>
+                        <td>Stock</td>
+                        <td>{{object.stock}}</td>
+                    </tr>
+                    <tr>
+                        <td>Order Available</td>
+                        <td>{{object.available_order}}</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            {{form.quantity.label}}
+                        </td>
+                        <td>
+                            {{form.quantity}}
+                        </td>
+                    </tr>
+                </table>
+                {% csrf_token %}
+                <input type="submit" class="btn btn-sm btn-outline-success float-right" value="Add to Cart">
+            </form>
         </p>
-        <a href="#" class="stretched-link">Add to Cart</a>
+
+
     </div>
 </div>
 
