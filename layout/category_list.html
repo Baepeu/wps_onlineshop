@@ -1,0 +1,29 @@
+{% for category in categories %}
+    {% if category.sub_categories.all|length %}
+        <li class="nav-item dropdown">
+            <a class="nav-link" href="{{category.get_absolute_url}}" id="menu_category_{{category.id}}" role="button"
+               aria-haspopup="true" aria-expanded="false">
+                {{category.name}}
+            </a>
+            <div class="dropdown-menu" aria-labelledby="menu_category_{{category.id}}">
+                {% for sub_category in category.sub_categories.all %}
+                <a class="dropdown-item" href="{{sub_category.get_absolute_url}}">{{sub_category.name}}</a>
+                {% endfor %}
+            </div>
+        </li>
+    {% else %}
+        <li class="nav-item">
+            <a class="nav-link" href="{{category.get_absolute_url}}">{{category.name}}</a>
+        </li>
+    {% endif %}
+{% endfor %}
+
+<style>
+    .dropdown .dropdown-menu {
+        display:none;
+    }
+    .dropdown:hover .dropdown-menu {
+        display: block;
+        margin-top: 0;
+     }
+</style>

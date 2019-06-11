@@ -91,7 +91,7 @@ DATABASES = {
         'NAME': 'shop',
         'USER':'admin_wps',
         'PASSWORD':'admin12345',
-        'HOST':'',
+        'HOST':'shop-master.cbh0z90tivjt.ap-northeast-2.rds.amazonaws.com',
         'PORT':'5432',
     },
     'shop_readonly1': {
@@ -99,7 +99,7 @@ DATABASES = {
         'NAME': 'shop',
         'USER':'admin_wps',
         'PASSWORD':'admin12345',
-        'HOST':'',
+        'HOST':'shop-read1.cbh0z90tivjt.ap-northeast-2.rds.amazonaws.com',
         'PORT':'5432',
     }
 }
@@ -147,8 +147,8 @@ USE_TZ = True
 
 # s3 - Media, Static 서버 별도로 (도메인x)
 
-AWS_ACCESS_KEY_ID = ''
-AWS_SECRET_ACCESS_KEY = ''
+AWS_ACCESS_KEY_ID = 'AKIAWXJAEH7LXQDDMZWG'
+AWS_SECRET_ACCESS_KEY = '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'
 
 AWS_REGION = 'ap-northeast-2'
 AWS_STORAGE_BUCKET_NAME = 'static.shop.actingprogrammer.io'

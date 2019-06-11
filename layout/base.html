@@ -10,7 +10,7 @@
 <body>
 <div class="container">
     <nav class="navbar navbar-expand-lg navbar-light sticky-top">
-        <a class="navbar-brand" href="#">Onlineshop</a>
+        <a class="navbar-brand" href="/">Onlineshop</a>
 
         <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
             {% if user.is_authenticated %}
@@ -32,15 +32,7 @@
         <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
 
             <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Home</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Products</a>
-                </li>
-
-
-
+                {% include 'category_list.html' %}
             </ul>
             <form class="form-inline my-2 my-lg-0">
                 <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">

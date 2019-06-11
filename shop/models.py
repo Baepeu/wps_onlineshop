@@ -1,5 +1,5 @@
 from django.db import models
-
+from django.shortcuts import resolve_url
 # Create your models here.
 # Category - 중첩, 레벨이 있게
 from ckeditor_uploader.fields import RichTextUploadingField
@@ -12,6 +12,12 @@ class Category(models.Model):
 
     def __str__(self):
         return self.name
+
+    class Meta:
+        ordering = ['name']
+
+    def get_absolute_url(self):
+        return resolve_url('product_in_category', self.slug)
 
 class Product(models.Model):
     category = models.ForeignKey(Category, on_delete=models.SET_NULL, blank=True, null=True, related_name='products')
