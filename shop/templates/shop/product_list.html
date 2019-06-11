@@ -6,7 +6,25 @@
 {% block content %}
 
 {% for object in object_list %}
-    {{object.name}}
+    <div class="card mt-3" style="width: 23%;">
+        <div class="card-header">
+    [{{object.category}}]
+  </div>
+      <img src="{{object.image.url}}" class="card-img-top" alt="{{object.name}}">
+      <div class="card-body">
+        <h5 class="card-title">{{object.name}}</h5>
+        <p class="card-text">{{object.name|truncatechars:30}}</p>
+      </div>
+      <ul class="list-group list-group-flush">
+        <li class="list-group-item">Price : {{object.price}}</li>
+        <li class="list-group-item">Stock : {{object.stock}}</li>
+          <li class="list-group-item"><span class="badge badge-success">Order Avaiable</span></li>
+      </ul>
+      <div class="card-body">
+        <a href="#" class="card-link">Detail</a>
+        <a href="#" class="card-link">Cart</a>
+      </div>
+    </div>
 {% endfor %}
 
 {% endblock %}
