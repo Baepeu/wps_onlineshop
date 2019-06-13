@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+
+{% block title %}
+{% endblock %}
+
+{% block content %}
+{% load humanize %}
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>Image</th>
+            <th>Name</th>
+            <th>Quantity</th>
+            <th>Unit Price</th>
+            <th>Price</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for item in cart %}
+            {% with product=item.product %}
+        <tr>
+            <td>{{forloop.counter}}</td>
+            <th><a href="{{product.get_absolute_url}}" target="_blank"><img src="{{product.image.url}}" width="100%" class="img-thumbnail"></a></th>
+            <th><a href="{{product.get_absolute_url}}" target="_blank">{{product.name}}</a></th>
+            <th>
+                <form action="{% url 'add_product' product.id %}" method="post">
+                    {% csrf_token %}
+                    {{item.quantity_form.quantity}}
+                    {{item.quantity_form.is_update}}
+                    <input type="submit" class="btn btn-success btn-sm" value="Update">
+                </form>
+            </th>
+            <th>{{item.price|intcomma}}</th>
+            <th>{{item.total_price|intcomma}}</th>
+        </tr>
+            {% endwith %}
+        {% endfor %}
+        <tr>
+            <td>
+                Total
+            </td>
+            <td colspan="4"></td>
+            <td class="num">{{cart.get_total_price|intcomma}}</td>
+        </tr>
+    </tbody>
+</table>
+{% endblock %}
