@@ -5,7 +5,7 @@
 
 {% block content %}
 {% load humanize %}
-<table class="table table-striped">
+<table class="table table-striped mt-3">
     <thead>
         <tr>
             <th>#</th>
@@ -14,6 +14,7 @@
             <th>Quantity</th>
             <th>Unit Price</th>
             <th>Price</th>
+            <th>Remove</th>
         </tr>
     </thead>
     <tbody>
@@ -21,18 +22,19 @@
             {% with product=item.product %}
         <tr>
             <td>{{forloop.counter}}</td>
-            <th><a href="{{product.get_absolute_url}}" target="_blank"><img src="{{product.image.url}}" width="100%" class="img-thumbnail"></a></th>
-            <th><a href="{{product.get_absolute_url}}" target="_blank">{{product.name}}</a></th>
-            <th>
+            <td><a href="{{product.get_absolute_url}}" target="_blank"><img src="{{product.image.url}}" width="100%" class="img-thumbnail"></a></td>
+            <td><a href="{{product.get_absolute_url}}" target="_blank">{{product.name}}</a></td>
+            <td>
                 <form action="{% url 'add_product' product.id %}" method="post">
                     {% csrf_token %}
                     {{item.quantity_form.quantity}}
                     {{item.quantity_form.is_update}}
                     <input type="submit" class="btn btn-success btn-sm" value="Update">
                 </form>
-            </th>
-            <th>{{item.price|intcomma}}</th>
-            <th>{{item.total_price|intcomma}}</th>
+            </td>
+            <td>{{item.price|intcomma}}</td>
+            <td>{{item.total_price|intcomma}}</td>
+            <td><a href="{% url 'remove_product' product.id %}" class="btn btn-sm btn-outline-warning">remove</a></td>
         </tr>
             {% endwith %}
         {% endfor %}
@@ -40,7 +42,7 @@
             <td>
                 Total
             </td>
-            <td colspan="4"></td>
+            <td colspan="5"></td>
             <td class="num">{{cart.get_total_price|intcomma}}</td>
         </tr>
     </tbody>
