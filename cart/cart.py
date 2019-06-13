@@ -38,6 +38,8 @@ class Cart(object):
     def add(self, product, quantity=1, is_update=False):
         product_id = str(product.id)
         if product_id not in self.cart:
+            # 만약 제품 정보가 Decimal 이라면 세션에 저장할 때는 str로 형변환 해서 저장하고
+            # 꺼내올 때는 Decimal로 형변환해서 사용해야 한다.
             self.cart[product_id] = {'quantity':0, 'price':product.price}
         if is_update:
             self.cart[product_id]['quantity'] = quantity
