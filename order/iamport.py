@@ -43,7 +43,7 @@ def payment_prepare(order_id, amount, *args, **kwargs):
         raise ValueError("토큰 오류")
 
 # 결제 이후에 해당 하는 주문 번호와 결제 금액으로 진행된 결제가 있는지 찾아주는 함수
-def find_trasaction(order_id, *args, **kwargs):
+def find_transaction(order_id, *args, **kwargs):
     access_token = get_token()
     if access_token:
         url = "https://api.iamport.kr/payments/find/"+order_id

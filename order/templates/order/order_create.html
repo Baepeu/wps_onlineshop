@@ -10,9 +10,11 @@ Order Checkout
 <div class="alert alert-info mt-3">
     Please enter your order information.
 </div>
-<form action="" method="post">
+<form action="" method="post" class="order-form">
     {% csrf_token %}
     {{form.as_p}}
+    <input type="hidden" name="pre_order_id" value="">
+    <input type="hidden" name="amount" value="{{cart.get_total_price}}">
     <input type="submit" value="Payment" class="btn btn-lg btn-success">
 </form>
 {% endblock %}
@@ -25,7 +27,7 @@ order_checkout_url = '{% url 'order_checkout' %}';
 order_validation_url = '{% url 'order_validation' %}';
 order_complete_url = '{% url 'order_complete' %}';
 </script>
-<script src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js" type="text/javasciprt"></script>
+<script src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js" type="text/javascript"></script>
 
 {% load staticfiles %}
 <script src="{% static 'js/checkout.js' %}" type="text/javascript"></script>

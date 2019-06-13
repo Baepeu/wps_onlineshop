@@ -38,7 +38,7 @@ class OrderItem(models.Model):
 
 import uuid
 import hashlib
-from .iamport import payment_prepare, find_trasaction
+from .iamport import payment_prepare, find_transaction
 class OrderTransactionManager(models.Manager):
     def create_new(self, order, amount, success=None, transaction_status=None):
         if not order:
@@ -65,10 +65,10 @@ class OrderTransactionManager(models.Manager):
         except Exception as e:
             print("save error", e)
 
-            return transaction.merchant_order_id
+        return transaction.merchant_order_id
 
     def get_transaction(self, merchant_order_id):
-        result = find_trasaction(merchant_order_id)
+        result = find_transaction(merchant_order_id)
         if result['status'] == 'paid':
             return result
         else:
