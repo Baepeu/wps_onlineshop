@@ -33,7 +33,11 @@ def cart_detail(request):
         item['quantity_form'] = AddToCartForm(initial={'quantity':item['quantity'], 'is_update':True})
 
     continue_url = '/'
+    # 현재 페이지 주소 얻기
+    # 1) request.build_absolute_uri('?') : 쿼리스트링 없이
+    # 2) request.build_absolute_uri() : 쿼리스트링까지 얻어오기
     current_url = request.build_absolute_uri('?')
     if 'HTTP_REFERER' in request.META and current_url != request.META['HTTP_REFERER']:
-        continue_url = request.META['HTTP_REFERER'];
+        continue_url = request.META['HTTP_REFERER']
+
     return render(request,'cart/cart_detail.html', {'cart':cart, 'continue_url':continue_url})
