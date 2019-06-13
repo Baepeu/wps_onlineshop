@@ -32,4 +32,8 @@ def cart_detail(request):
     for item in cart:
         item['quantity_form'] = AddToCartForm(initial={'quantity':item['quantity'], 'is_update':True})
 
-    return render(request,'cart/cart_detail.html', {'cart':cart})
+    continue_url = '/'
+    current_url = request.build_absolute_uri('?')
+    if 'HTTP_REFERER' in request.META and current_url != request.META['HTTP_REFERER']:
+        continue_url = request.META['HTTP_REFERER'];
+    return render(request,'cart/cart_detail.html', {'cart':cart, 'continue_url':continue_url})

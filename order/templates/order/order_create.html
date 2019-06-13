@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Order Checkout
+{% endblock %}
+
+{% block content %}
+<div class="alert alert-info mt-3">
+    Please enter your order information.
+</div>
+<form action="" method="post">
+    {% csrf_token %}
+    {{form.as_p}}
+    <input type="submit" value="Payment" class="btn btn-lg btn-success">
+</form>
+{% endblock %}

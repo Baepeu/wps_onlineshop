@@ -45,6 +45,14 @@
             <td colspan="5"></td>
             <td class="num">{{cart.get_total_price|intcomma}}</td>
         </tr>
+
+        <tr>
+                <td colspan="7">
+                    <a href="{{continue_url}}" class="float-left btn btn-lg btn-primary">Continue Shopping</a>
+                    <a href="{% url 'order_create' %}" class="float-right btn btn-lg btn-info">Checkout</a>
+                </td>
+
+            </tr>
     </tbody>
 </table>
 {% endblock %}
