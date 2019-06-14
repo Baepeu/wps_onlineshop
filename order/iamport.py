@@ -69,6 +69,25 @@ def find_transaction(order_id, *args, **kwargs):
 
 
 
+def cancel_transaction(transaction_id, *args, **kwargs):
+    access_token = get_token()
+    if access_token:
+        url = "https://api.iamport.kr/payments/cancel"
+        headers = {'Authorization':access_token}
+        access_data = {
+            'imp_uid': transaction_id
+        }
+        print("data", access_data)
+        req = requests.post(url, data=access_data, headers=headers)
+        data = req.json()
+        if data['code'] is 0:
+            return data
+        else:
+            return None
+    else:
+        raise ValueError("토큰 오류")
+
+
 
 
 

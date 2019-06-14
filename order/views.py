@@ -78,18 +78,23 @@ class OrderImpAjaxView(View):
             return JsonResponse({}, status=401)
 
         # 결제 정보 수정
-        exact_transaction = transaction[0]
-        exact_transaction.transaction_id = imp_id
-        exact_transaction.success = True
-        exact_transaction.save()
+        try:
+            exact_transaction = transaction[0]
+            exact_transaction.transaction_id = imp_id
+            exact_transaction.success = True
+            exact_transaction.save()
 
-        order.paid = True
-        order.save()
-        data = {
-            'works':True
-        }
+            # 주문 정보 - 결제 완료로 변경
+            order.paid = True
+            order.save()
+            data = {
+                'works':True
+            }
 
-        return JsonResponse(data)
+            return JsonResponse(data)
+        except Exception as e:
+            print("transaction error", e)
+            return JsonResponse({"message":str(e)}, status=401)
 
 from .models import Order
 def order_complete(request):
