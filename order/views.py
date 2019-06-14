@@ -61,7 +61,35 @@ class OrderCheckoutAjaxView(View):
 
 class OrderImpAjaxView(View):
     def post(self, request, *args, **kwargs):
-        return JsonResponse({})
+        order_id = request.POST.get('order_id')
+        merchant_id = request.POST.get('merchant_id')
+        imp_id = request.POST.get('imp_id')
+        amount = request.POST.get('amount')
+        order = Order.objects.filter(pk=order_id)
+
+        if not order.exists():
+            return JsonResponse({}, status=401)
+
+        order = order[0]
+
+        transaction = OrderTransaction.objects.filter(order=order, merchant_order_id=merchant_id, amount=amount)
+
+        if not transaction.exists():
+            return JsonResponse({}, status=401)
+
+        # 결제 정보 수정
+        exact_transaction = transaction[0]
+        exact_transaction.transaction_id = imp_id
+        exact_transaction.success = True
+        exact_transaction.save()
+
+        order.paid = True
+        order.save()
+        data = {
+            'works':True
+        }
+
+        return JsonResponse(data)
 
 from .models import Order
 def order_complete(request):
