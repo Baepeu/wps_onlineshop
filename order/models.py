@@ -103,8 +103,7 @@ def order_payment_validation(sender, instance, *args, **kwargs):
         is_not_valid = instance.merchant_order_id != merchant_order_id or instance.transaction_id!=imp_id or instance.amount != amount
 
         #local_transaction = OrderTransaction.objects.filter(merchant_order_id=merchant_order_id, transaction_id=imp_id, amount=amount).exists()
-        data = cancel_transaction(instance.transaction_id)
-        raise ValueError("비정상 거래로 결체 취소되었습니다.")
+
         if is_not_valid:
             if instance.order.paid == False:
                 data = cancel_transaction(instance.transaction_id)

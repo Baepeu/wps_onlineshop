@@ -91,6 +91,9 @@ class OrderImpAjaxView(View):
                 'works':True
             }
 
+            cart = Cart(request)
+            cart.clear()
+
             return JsonResponse(data)
         except Exception as e:
             print("transaction error", e)
