@@ -26,18 +26,32 @@ def export_to_csv(modeladmin, request, queryset):
     writer = csv.writer(response)
 
     # 모델에서 필드 목록 불러오기
+    print(opts.get_fields())
+
     fields = [field for field in opts.get_fields() if not field.many_to_many and not field.one_to_many]
     # 필드명으로 헤더 만들기
-    writer.writerow([field.verbose_name for field in fields])
+    field_headers = [field.verbose_name for field in fields]
+    field_headers += ['product name', 'quantity', 'Unit price', 'Total Price']
+    writer.writerow(field_headers)
 
     for obj in queryset:
         data_row = []
+
+        order_items = getattr(obj, 'items').all()
         for field in fields:
             value = getattr(obj, field.name)
             if isinstance(value, datetime.datetime):
                 value = value.strftime("%Y-%m-%d")
             data_row.append(value)
-        writer.writerow(data_row)
+        for order_item in order_items:
+            current_data = data_row.copy()
+            product_name = order_item.product.name
+            current_data.append(product_name)
+            current_data.append(order_item.quantity)
+            current_data.append(order_item.price)
+            current_data.append(order_item.get_item_total_price())
+            writer.writerow(current_data)
+            del(current_data)
 
     return response
 
