@@ -92,6 +92,16 @@ class OrderTransaction(models.Model):
         ordering = ['-created']
 
 def order_payment_validation(sender, instance, *args, **kwargs):
+    """
+    1. 결제 시도 Iamport
+    2. 결제 완료 Iamport
+
+    before 3) Transaction에 있는 merchant_order_id랑 iamport에 넘겨받은 merchant_order_id에 해당하는
+    transaction이 있으면 결제 완료됐다고 imp_uid(결제번호) 저장
+    - 일치하는 데이터가 없다면 cancel
+
+    3. 결제 완료 정보를 Transaction저장, Order 정보에 저장
+    """
     if instance.transaction_id:
         import_transaction = OrderTransaction.objects.get_transaction(merchant_order_id=instance.merchant_order_id)
 
@@ -100,14 +110,20 @@ def order_payment_validation(sender, instance, *args, **kwargs):
         imp_id = import_transaction['imp_id']
         amount = import_transaction['amount']
 
+        # 넘겨받은 transaction 정보와 iamport  정보가 일치하는지 확인
         is_not_valid = instance.merchant_order_id != merchant_order_id or instance.transaction_id!=imp_id or instance.amount != amount
 
-        #local_transaction = OrderTransaction.objects.filter(merchant_order_id=merchant_order_id, transaction_id=imp_id, amount=amount).exists()
+        # 취소가 되나 확인
+        data = cancel_transaction(instance.transaction_id)
+        raise ValueError("비정상 거래로 결체 취소되었습니다.")
+        # pre_save 에서 오류가 발생하면 저장이 처리 되지 않는다.
 
+        # 정보가 일치하지 않는 다면 결제 처리 하지 않음
         if is_not_valid:
+            # 해당 주문의 결제가 이미 진행된 경우가 아닐 때만 결제 취소
             if instance.order.paid == False:
                 data = cancel_transaction(instance.transaction_id)
-                ValueError("비정상 거래로 결체 취소되었습니다.")
+                raise ValueError("비정상 거래로 결체 취소되었습니다.")
             raise ValueError("비정상 거래로 주문 실패하였습니다.")
 
 from django.db.models.signals import post_save, pre_save
