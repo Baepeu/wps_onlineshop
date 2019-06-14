@@ -72,7 +72,8 @@ order_detail.short_description = 'Detail'
 
 def order_pdf(obj):
     # pdf파일 만들기 뷰로 가는 링크
-    return mark_safe('PDF')
+    url = resolve_url('admin_order_pdf', obj.id)
+    return mark_safe(f'<a href="{url}">pdf</a>')
 order_pdf.short_description = 'PDF'
 
 class OrderOption(admin.ModelAdmin):
