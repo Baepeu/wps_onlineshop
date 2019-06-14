@@ -109,6 +109,15 @@ def order_complete(request):
     if order.exists():
         return render(request,'order/order_created.html', {'order':order[0]})
 
+from django.shortcuts import get_object_or_404
+from django.contrib.admin.views.decorators import staff_member_required
+
+@staff_member_required
+def admin_order_detail(request, order_id):
+    order = get_object_or_404(Order, id=order_id)
+    return render(request, 'order/admin/order_detail.html', {'order':order})
+
+
 
 
 

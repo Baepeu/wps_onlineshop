@@ -38,12 +38,15 @@ def export_to_csv(modeladmin, request, queryset):
         data_row = []
 
         order_items = getattr(obj, 'items').all()
+        # 제품 마다 중복 출력될 주문 정보 만들기
         for field in fields:
             value = getattr(obj, field.name)
             if isinstance(value, datetime.datetime):
                 value = value.strftime("%Y-%m-%d")
             data_row.append(value)
+        # 주문 정보와 함께 제품 정보 출력하기
         for order_item in order_items:
+            # 주문 정보에 제품 정보를 껴넣기 위해 리스트 복제
             current_data = data_row.copy()
             product_name = order_item.product.name
             current_data.append(product_name)
@@ -51,6 +54,7 @@ def export_to_csv(modeladmin, request, queryset):
             current_data.append(order_item.price)
             current_data.append(order_item.get_item_total_price())
             writer.writerow(current_data)
+            # 메모리 확보를 위해 리스트 삭제
             del(current_data)
 
     return response
@@ -58,10 +62,12 @@ def export_to_csv(modeladmin, request, queryset):
 export_to_csv.short_description = "Oder Export to CSV"
 
 from django.utils.safestring import mark_safe
+from django.shortcuts import resolve_url
 def order_detail(obj):
     # 주문 상세 정보 페이
     # 상세 페이지 링크
-    return mark_safe('<a href="#">Detail</a>')
+    url = resolve_url('admin_order_detail', obj.id)
+    return mark_safe(f'<a href="{url}">see detail</a>')
 order_detail.short_description = 'Detail'
 
 def order_pdf(obj):
